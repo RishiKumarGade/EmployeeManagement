@@ -1,5 +1,3 @@
-// path: src/main/java/com/example/employeemanagement/controller/AdminEmployeeDataController.java
-
 package com.example.employeemanagement.controller;
 
 import com.example.employeemanagement.model.EmployeeData;
@@ -17,7 +15,6 @@ public class AdminEmployeeDataController {
     @Autowired
     private EmployeeDataRepository dataRepo;
 
-    // Create EmployeeData for given empId
     @PostMapping("/{empId}")
     public ResponseEntity<?> createByEmpId(@PathVariable String empId, @RequestBody EmployeeData data) {
         if (!dataRepo.findByEmpId(empId).isEmpty()) {
@@ -27,7 +24,6 @@ public class AdminEmployeeDataController {
         return ResponseEntity.ok(dataRepo.save(data));
     }
 
-    // Update EmployeeData for given empId
     @PutMapping("/{empId}")
     public ResponseEntity<?> updateByEmpId(@PathVariable String empId, @RequestBody EmployeeData data) {
         List<EmployeeData> existingList = dataRepo.findByEmpId(empId);
@@ -35,7 +31,7 @@ public class AdminEmployeeDataController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("❌ No data found for empId.");
         }
 
-        EmployeeData existing = existingList.get(0); // assuming one per empId
+        EmployeeData existing = existingList.get(0);
         existing.setDob(data.getDob());
         existing.setGender(data.getGender());
         existing.setMobile(data.getMobile());

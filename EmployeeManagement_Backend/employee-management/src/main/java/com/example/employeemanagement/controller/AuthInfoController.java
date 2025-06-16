@@ -32,8 +32,8 @@ public class AuthInfoController {
         }
 
         String token = authHeader.substring(7);
-        String identifier = jwtTokenUtil.extractUsername(token); // Could be email or username
-        String role = jwtTokenUtil.extractRole(token); // You need to extract this in JwtUtil
+        String identifier = jwtTokenUtil.extractUsername(token);
+        String role = jwtTokenUtil.extractRole(token);
 
         if ("ADMIN".equalsIgnoreCase(role)) {
             Optional<Admin> adminOpt = adminRepository.findByUsername(identifier);
@@ -41,8 +41,8 @@ public class AuthInfoController {
 
             Admin admin = adminOpt.get();
             UserDetailsResponse response = new UserDetailsResponse(
-                    admin.getUsername(),      // Make sure Admin has a getName()
-                    admin.getUsername(),  // Return username as 'mail'
+                    admin.getUsername(),
+                    admin.getUsername(),
                     "ADMIN",
                     null,
                     null
@@ -50,7 +50,6 @@ public class AuthInfoController {
             return ResponseEntity.ok(response);
         }
 
-        // Otherwise check for EMPLOYEE/HR
         Optional<Employee> employeeOpt = employeeRepository.findByMail(identifier);
         if (employeeOpt.isEmpty()) return ResponseEntity.status(404).body("User not found");
 

@@ -16,7 +16,6 @@ public class UserDetailsResponse {
     private String department;
     private String jobRole;
 
-    // Constructors
     public UserDetailsResponse() {}
 
     public UserDetailsResponse(String name, String email, String role, String department, String jobRole) {
@@ -58,6 +57,4 @@ public class UserDetailsResponse {
     public void setName(String name) {
         this.name = name;
     }
-// Getters and Setters
-    // (Generate using your IDE or Lombok if you prefer)
 }

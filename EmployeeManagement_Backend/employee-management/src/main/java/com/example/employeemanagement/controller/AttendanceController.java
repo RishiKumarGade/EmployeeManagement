@@ -30,7 +30,6 @@ public class AttendanceController {
     @Autowired
     private AttendanceService attendanceService;
 
-    // Manually trigger attendance creation for today
     @PostMapping("/generate")
     public ResponseEntity<String> generateTodayAttendance() {
         System.out.println("tried generating attendance");
@@ -51,7 +50,6 @@ public class AttendanceController {
         return ResponseEntity.ok("✅ Attendance records created for today.");
     }
 
-    // HR updates attendance
     @PutMapping("/update")
     public ResponseEntity<String> updateAttendance(@RequestParam String mail, @RequestParam String date, @RequestParam String status) {
         LocalDate localDate = LocalDate.parse(date);
@@ -72,7 +70,6 @@ public class AttendanceController {
     }
 
 
-    // Day-wise
     @GetMapping("/day")
     public List<Attendance> getDayAttendance(@RequestParam String date) {
         return attendanceRepo.findByDate(LocalDate.parse(date));

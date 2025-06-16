@@ -22,7 +22,6 @@ public class EmployeeData {
     private String mobile;
     private String address;
 
-    // --- Getters and Setters ---
 
     public String getId() {
         return id;

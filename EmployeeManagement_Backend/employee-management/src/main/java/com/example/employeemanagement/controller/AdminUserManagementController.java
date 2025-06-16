@@ -20,16 +20,16 @@ public class AdminUserManagementController {
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody Employee user) {
         if (user.getMail() == null || user.getPass() == null || user.getRole() == null) {
-            return ResponseEntity.badRequest().body("❌ Missing required fields: mail, pass, or role.");
+            return ResponseEntity.badRequest().body("Missing required fields: mail, pass, or role.");
         }
         System.out.println(user.getMail() + user.getPass()+user.getRole());
 
         if (!user.getRole().equalsIgnoreCase("HR") && !user.getRole().equalsIgnoreCase("EMPLOYEE")) {
-            return ResponseEntity.badRequest().body("❌ Invalid role. Only 'HR' or 'EMPLOYEE' allowed.");
+            return ResponseEntity.badRequest().body("Invalid role. Only 'HR' or 'EMPLOYEE' allowed.");
         }
 
         if (employeeRepo.findByMail(user.getMail()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("❌ A user with this email already exists.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("A user with this email already exists.");
         }
         System.out.println("done");
         user.setPass(passwordEncoder.encode(user.getPass()));

@@ -2,7 +2,7 @@ package com.example.employeemanagement.dto;
 
 public class AttendanceUpdateRequest {
     private String mail;
-    private String date; // Format: yyyy-MM-dd
+    private String date;
 
     public String getMail() {
         return mail;

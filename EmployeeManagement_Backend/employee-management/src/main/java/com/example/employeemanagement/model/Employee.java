@@ -90,5 +90,4 @@ public class Employee {
         this.jobRole = jobRole;
     }
 
-    // Add constructors, getters, setters
 }

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/employee-management.iml" filepath="$PROJECT_DIR$/.idea/employee-management.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/EmployeeManagement_Backend.iml" filepath="$PROJECT_DIR$/.idea/EmployeeManagement_Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/employee-management/employee-management.iml" filepath="$PROJECT_DIR$/employee-management/employee-management.iml" />
     </modules>
   </component>
 </project>

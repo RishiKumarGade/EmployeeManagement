@@ -15,7 +15,7 @@ public class LeaveRequest {
     private LocalDate endDate;
     private int totalDays;
     private String reason;
-    private String status; // Pending, Approved, Rejected
+    private String status;
     private String reviewedBy;
     private String decisionReason;
 
@@ -118,5 +118,4 @@ public class LeaveRequest {
     private LocalDate decisionDate;
     private String workHandoverDetails;
 
-    // Getters & Setters
 }

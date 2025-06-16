@@ -11,7 +11,7 @@ public class Attendance {
 
     private String employeeMail;
     private LocalDate date;
-    private String status; // "Present" or "Absent"
+    private String status;
 
     public String getEmployeeMail() {
         return employeeMail;
@@ -37,5 +37,4 @@ public class Attendance {
         this.status = status;
     }
 
-    // Getters and Setters
 }

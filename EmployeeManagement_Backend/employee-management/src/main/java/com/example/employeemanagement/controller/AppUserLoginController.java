@@ -35,7 +35,7 @@ public class AppUserLoginController {
                     new UsernamePasswordAuthenticationToken(username, password)
             );
         } catch (Exception e) {
-            e.printStackTrace(); // Log exact reason (e.g., BadCredentialsException)
+            e.printStackTrace();
             return ResponseEntity.status(401).body("❌ Invalid credentials");
         }
 

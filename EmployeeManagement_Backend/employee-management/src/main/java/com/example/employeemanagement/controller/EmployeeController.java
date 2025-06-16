@@ -30,7 +30,6 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'HR')")
     public Employee createEmployee(@RequestBody Employee employee) {
-        // Only ADMIN can create HR users
         if ("HR".equalsIgnoreCase(employee.getRole())) {
             if (!SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                     .contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
@@ -38,7 +37,6 @@ public class EmployeeController {
             }
         }
 
-        // Encode password
         employee.setPass(passwordEncoder.encode(employee.getPass()));
         LeaveBalance balance = new LeaveBalance();
         balance.setEmployeeMail(employee.getMail());

@@ -61,5 +61,4 @@ public class LeaveBalance {
     private int personalLeave;
     private int emergencyLeave;
 
-    // Getters & Setters
 }

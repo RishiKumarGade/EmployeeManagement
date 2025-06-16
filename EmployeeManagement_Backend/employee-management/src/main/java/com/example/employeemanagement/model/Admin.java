@@ -11,7 +11,6 @@ public class Admin {
     private String password;
     private String role = "ADMIN";
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
