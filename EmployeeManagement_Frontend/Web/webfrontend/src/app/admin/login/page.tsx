@@ -15,6 +15,7 @@ export default function AdminLoginPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: email, password:pass }),
+      credentials:"include"
     });
 
     const data = await res.json();
@@ -66,9 +67,7 @@ export default function AdminLoginPage() {
           >
             Admin Sign In
           </button>
-          <p className="text-center mt-4 text-sm text-indigo-600 hover:text-purple-600 cursor-pointer">
-            Forgot Password?
-          </p>
+        
         </form>
       </div>
     </div>

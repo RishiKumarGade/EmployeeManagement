@@ -31,7 +31,7 @@ const fetchLeaveBalances = async () => {
         const res = await axios.get(`http://localhost:8080/leave/balance?mail=${userEmail}`, {
           headers: {
             Authorization: `Bearer ${token}`
-          }
+          },
         });
 
         const data = res.data;
@@ -57,6 +57,9 @@ const fetchLeaveBalances = async () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
+          credentials:"include"
+
       });
       if (response.ok) {
         const user = await response.json();
@@ -77,11 +80,12 @@ const fetchLeaveBalances = async () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        credentials:"include"
       });
 
       if (response.ok) {
         const requests = await response.json();
-        setRecentRequests(requests.slice(0, 3)); // Show only last 3 requests
+        setRecentRequests(requests.slice(0, 3)); 
       }
     } catch (error) {
       console.error("Failed to fetch requests:", error);
@@ -131,10 +135,11 @@ const fetchLeaveBalances = async () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
+credentials:"include"
       });
 
       if (response.ok) {
-        alert("✅ Leave request submitted successfully!");
+        alert(" Leave request submitted successfully!");
         setStartDate("");
         setEndDate("");
         setReason("");
@@ -142,11 +147,11 @@ const fetchLeaveBalances = async () => {
         fetchMyRequests();
       } else {
         const errorMsg = await response.text();
-        alert(`❌ Failed: ${errorMsg}`);
+        alert(` Failed: ${errorMsg}`);
       }
     } catch (error) {
       console.error("Error submitting leave request:", error);
-      alert("❌ An error occurred. Please try again.");
+      alert(" An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -188,14 +193,12 @@ const fetchLeaveBalances = async () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Enhanced Page Header */}
         <div className="mb-8 bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Request Leave</h2>
           <p className="text-gray-600">Submit your leave application for approval</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Enhanced Main Form */}
           <div className="lg:col-span-2">
             <div className="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
               <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
@@ -206,7 +209,6 @@ const fetchLeaveBalances = async () => {
               </div>
               
               <div className="p-6 space-y-6">
-                {/* Enhanced Leave Type Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
                     Leave Type
@@ -240,7 +242,6 @@ const fetchLeaveBalances = async () => {
                   </div>
                 </div>
 
-                {/* Enhanced Date Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -272,7 +273,6 @@ const fetchLeaveBalances = async () => {
                   </div>
                 </div>
 
-                {/* Enhanced Days Calculator */}
                 {daysDiff > 0 && (
                   <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
                     <div className="flex items-center justify-center">
@@ -285,7 +285,6 @@ const fetchLeaveBalances = async () => {
                   </div>
                 )}
 
-                {/* Enhanced Form Fields */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     <FileText className="inline h-4 w-4 mr-1 text-indigo-600" />
@@ -316,7 +315,6 @@ const fetchLeaveBalances = async () => {
                   />
                 </div>
 
-                {/* Enhanced Submit Button */}
                 <div className="pt-4">
                   <button
                     onClick={handleSubmit}
@@ -337,9 +335,7 @@ const fetchLeaveBalances = async () => {
             </div>
           </div>
 
-          {/* Enhanced Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Enhanced Leave Balance */}
             <div className="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
               <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900">Leave Balance</h3>
@@ -370,7 +366,6 @@ const fetchLeaveBalances = async () => {
               </div>
             </div>
 
-            {/* Recent Requests */}
             <div className="bg-white shadow-sm rounded-2xl border border-gray-100 overflow-hidden">
               <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900">Recent Requests</h3>
@@ -402,26 +397,7 @@ const fetchLeaveBalances = async () => {
               </div>
             </div>
 
-            {/* Enhanced Quick Tips */}
-            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-6">
-              <h4 className="text-sm font-semibold text-amber-800 mb-3 flex items-center">
-                💡 Quick Tips
-              </h4>
-              <ul className="text-xs text-amber-700 space-y-2">
-                <li className="flex items-start">
-                  <CheckCircle className="h-3 w-3 mr-2 mt-0.5 text-amber-600 flex-shrink-0" />
-                  Submit requests at least 2 weeks in advance
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="h-3 w-3 mr-2 mt-0.5 text-amber-600 flex-shrink-0" />
-                  Emergency leave requires immediate manager approval
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="h-3 w-3 mr-2 mt-0.5 text-amber-600 flex-shrink-0" />
-                  Check team calendar before requesting dates
-                </li>
-              </ul>
-            </div>
+           
           </div>
         </div>
       </div>

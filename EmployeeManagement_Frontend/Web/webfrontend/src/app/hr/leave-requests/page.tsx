@@ -12,7 +12,7 @@ interface LeaveRequest {
   totalDays: number;
   reason: string;
   workHandoverDetails: string;
-  status: 'Pending' | 'APPROVED' | 'REJECTED';
+  status: 'Pending' | 'APPROVED' | 'REJECT';
   reviewedBy?: string;
   decisionDate?: string;
   decisionReason?: string;
@@ -73,7 +73,7 @@ export default function LeaveRequestsPage() {
   const calculateStats = (data: LeaveRequest[]) => {
     const pending = data.filter(r => r.status === 'Pending').length;
     const approved = data.filter(r => r.status === 'APPROVED').length;
-    const rejected = data.filter(r => r.status === 'REJECTED').length;
+    const rejected = data.filter(r => r.status === 'REJECT').length;
     setStats({ pending, approved, rejected });
   };
 
@@ -127,15 +127,15 @@ export default function LeaveRequestsPage() {
       });
 
       if (res.ok) {
-        alert(`✅ Leave request ${action}d successfully`);
+        alert(` Leave request ${action}d successfully`);
         fetchLeaveRequests();
       } else {
         const errMsg = await res.text();
-        alert("❌ Failed: " + errMsg);
+        alert(" Failed: " + errMsg);
       }
     } catch (err) {
       console.error("Error updating leave request:", err);
-      alert("❌ An error occurred while processing the request");
+      alert(" An error occurred while processing the request");
     }
   };
 
@@ -216,7 +216,6 @@ export default function LeaveRequestsPage() {
     <div className="min-h-screen bg-gray-50">
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Page Header with Stats */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div>
@@ -224,7 +223,6 @@ export default function LeaveRequestsPage() {
               <p className="text-gray-600">Review and approve employee leave requests</p>
             </div>
             
-            {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-white border-l-4 border-yellow-400 p-4 rounded-lg shadow-sm">
                 <div className="text-2xl font-bold text-gray-900">{stats.pending}</div>
@@ -242,7 +240,6 @@ export default function LeaveRequestsPage() {
           </div>
         </div>
 
-        {/* Filters */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex flex-wrap gap-4 items-end">
             <div className="flex flex-col">
@@ -296,7 +293,6 @@ export default function LeaveRequestsPage() {
           </div>
         </div>
 
-        {/* Requests Table/Cards */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-900">Leave Requests ({filteredRequests.length})</h3>
@@ -341,7 +337,6 @@ export default function LeaveRequestsPage() {
                       </span>
                     </div>
 
-                    {/* Request Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                       <div className="bg-gray-50 p-3 rounded-lg">
                         <div className="text-xs text-gray-500 mb-1">Leave Type</div>
@@ -358,12 +353,7 @@ export default function LeaveRequestsPage() {
                         </div>
                         <div className="text-sm text-gray-600">({request.totalDays} days)</div>
                       </div>
-                      {/* <div className="bg-gray-50 p-3 rounded-lg">
-                        <div className="text-xs text-gray-500 mb-1">Applied On</div>
-                        <div className="font-semibold text-gray-900">
-                          {request.requestDate ? formatDate(request.requestDate) : 'N/A'}
-                        </div>
-                      </div> */}
+                  
                       <div className="bg-gray-50 p-3 rounded-lg">
                         <div className="text-xs text-gray-500 mb-1">
                           {request.status === 'Pending' ? 'Status' : 'Reviewed By'}
@@ -428,7 +418,6 @@ export default function LeaveRequestsPage() {
         </div>
       </div>
 
-      {/* Rejection Modal */}
       {showRejectModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-4">

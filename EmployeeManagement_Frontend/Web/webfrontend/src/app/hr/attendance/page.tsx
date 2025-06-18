@@ -53,7 +53,6 @@ export default function AttendancePage() {
     early: 0
   });
 
-  // Get token once
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   const calculateStats = (data: AttendanceRecord[]) => {
@@ -91,17 +90,13 @@ export default function AttendancePage() {
   try {
     const selectedDate = new Date(date);
 
-    // Determine the full month range based on the selected date
     const monthStart = startOfMonth(selectedDate);
     const monthEnd = endOfMonth(selectedDate);
-
-    // Get each week starting in the month
     const weeks = eachWeekOfInterval(
       { start: monthStart, end: monthEnd },
-      { weekStartsOn: 1 } // Monday as the start of the week
+      { weekStartsOn: 1 } 
     );
 
-    // Fetch attendance for each week
     const weeklyPromises = weeks.map(async (weekStartDate) => {
       const weekEndDate = endOfWeek(weekStartDate, { weekStartsOn: 1 });
       console.log(`http://localhost:8080/hr/attendance/range?start=${format(weekStartDate, 'yyyy-MM-dd')}&end=${format(weekEndDate, 'yyyy-MM-dd')}`)
@@ -124,7 +119,6 @@ export default function AttendancePage() {
     const weeklyResults = await Promise.all(weeklyPromises);
     setWeeklyData(weeklyResults);
 
-    // Combine all days to calculate overall stats
     const allData = weeklyResults.flatMap((w) => w.days);
     setStats(calculateStats(allData));
 
@@ -159,7 +153,6 @@ export default function AttendancePage() {
           }
         );
         
-        // Get weekly data for this month
         const weeks = eachWeekOfInterval({ start: monthStart, end: monthEnd }, { weekStartsOn: 1 });
         const weeklyData = weeks.map(weekStart => {
           const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
@@ -212,7 +205,6 @@ export default function AttendancePage() {
         }
       );
       
-      // Group by months
       const months = eachMonthOfInterval({ start: yearStart, end: yearEnd });
       const monthlyData = months.map(monthDate => {
         const monthStart = startOfMonth(monthDate);
@@ -222,7 +214,6 @@ export default function AttendancePage() {
           return recordDate >= monthStart && recordDate <= monthEnd;
         });
         
-        // Get weekly data for this month
         const weeks = eachWeekOfInterval({ start: monthStart, end: monthEnd }, { weekStartsOn: 1 });
         const weeklyData = weeks.map(weekStart => {
           const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
@@ -423,16 +414,13 @@ export default function AttendancePage() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
         <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Attendance Monitoring</h2>
           <p className="text-gray-600">Track and review employee attendance patterns daily, weekly, monthly, or yearly.</p>
         </div>
 
-        {/* Controls Panel */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            {/* View Tabs */}
             <div className="flex bg-gray-100 rounded-xl p-1">
               {['Day', 'Week', 'Month', 'Year'].map((view) => (
                 <button
@@ -449,7 +437,6 @@ export default function AttendancePage() {
               ))}
             </div>
 
-            {/* Filters */}
             <div className="flex flex-wrap gap-4">
               <div className="flex flex-col">
                 <label className="text-sm font-medium text-gray-600 mb-1">Date</label>
@@ -478,7 +465,6 @@ export default function AttendancePage() {
           </div>
         </div>
 
-        {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-2xl shadow-sm p-6 border-t-4 border-green-500">
             <div className="text-3xl font-bold text-gray-900 mb-2">{stats.present}</div>
@@ -498,7 +484,6 @@ export default function AttendancePage() {
           </div>
         </div>
 
-        {/* Generate Button */}
         {!generated && activeView === 'Day' && (
           <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
             <button
@@ -510,9 +495,7 @@ export default function AttendancePage() {
           </div>
         )}
 
-        {/* Attendance Content */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          {/* Content Header */}
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-900">
               {activeView} Attendance 
@@ -537,7 +520,6 @@ export default function AttendancePage() {
             </div>
           ) : (
             <>
-              {/* Day View */}
               {activeView === 'Day' && (
                 <div className="p-6">
                   <div className="grid grid-cols-4 gap-4 p-4 bg-gray-100 rounded-lg mb-4 font-semibold text-gray-700">
@@ -588,7 +570,6 @@ export default function AttendancePage() {
                 </div>
               )}
 
-              {/* Week View */}
               {activeView === 'Week' && (
                 <div className="p-6">
                   <div className="space-y-6">
@@ -628,7 +609,6 @@ export default function AttendancePage() {
                 </div>
               )}
 
-              {/* Month View */}
               {activeView === 'Month' && (
                 <div className="p-6">
                   <div className="space-y-8">
@@ -685,7 +665,6 @@ export default function AttendancePage() {
                 </div>
               )}
 
-              {/* Year View */}
               {activeView === 'Year' && yearlyData && (
                 <div className="p-6">
                   <div className="mb-8">

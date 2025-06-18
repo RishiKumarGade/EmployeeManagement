@@ -10,17 +10,17 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const res = await fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mail: email, password:pass }),
+      credentials:"include"
     });
-
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
+      document.cookie = `token=${data.token}; path=/; max-age=3600`;
       router.push(`/${data.role.toLowerCase()}/dashboard`);
     } else {
       alert(data.message || 'Login failed');

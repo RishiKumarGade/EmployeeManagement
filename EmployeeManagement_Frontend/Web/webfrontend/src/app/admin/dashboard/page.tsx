@@ -27,6 +27,7 @@ export default function AdminDashboard() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
+      credentials:"include",
       body: JSON.stringify({ ...form, salary: parseFloat(form.salary) }),
     });
 

@@ -126,12 +126,7 @@ export default function HRDashboard() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleDataChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setEmployeeDataForm({ ...employeeDataForm, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = async () => {
-    // Validation
     if (!form.name.trim()) {
       toast.error('Employee name is required');
       return;
@@ -301,46 +296,12 @@ toast(`${filteredEmployees.length} employees selected`, {
 });    }
   };
 
-  const handleExportCSV = () => {
-    toast.promise(
-      new Promise((resolve) => {
-        setTimeout(() => {
-          // Simulate CSV export
-          const csvData = filteredEmployees.map(profile => ({
-            Name: profile.employee.name,
-            Email: profile.employee.mail,
-            Department: profile.employee.department,
-            JobRole: profile.employee.jobRole,
-            Salary: profile.employee.salary
-          }));
-          
-          console.log('CSV Export:', csvData);
-          resolve(csvData);
-        }, 1500);
-      }),
-      {
-        loading: 'Generating CSV export...',
-        success: 'CSV exported successfully!',
-        error: 'Failed to export CSV',
-      }
-    );
-  };
+
 
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
-  const calculateAge = (dob: string) => {
-    if (!dob) return 'N/A';
-    const birthDate = new Date(dob);
-    const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      return age - 1;
-    }
-    return age;
-  };
 
 
 
@@ -363,7 +324,6 @@ toast(`${filteredEmployees.length} employees selected`, {
     total: employees.length
   };
 
-  // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredEmployees.slice(indexOfFirstItem, indexOfLastItem);
@@ -371,7 +331,6 @@ toast(`${filteredEmployees.length} employees selected`, {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Toast Container */}
       <Toaster
         position="top-right"
         toastOptions={{
@@ -405,7 +364,6 @@ toast(`${filteredEmployees.length} employees selected`, {
       />
 
       <div className="max-w-7xl mx-auto p-6">
-        {/* Page Header */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Employee Management</h2>
@@ -420,10 +378,8 @@ toast(`${filteredEmployees.length} employees selected`, {
           </button>
         </div>
 
-        {/* Search Controls Panel */}
         <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
           <div className="flex flex-col gap-4">
-            {/* Search Criteria Radio Buttons */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">Search By:</label>
               <div className="flex flex-wrap gap-6">
@@ -473,8 +429,6 @@ toast(`${filteredEmployees.length} employees selected`, {
                 </label>
               </div>
             </div>
-
-            {/* Search Input */}
             <div className="flex-1 max-w-md relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
               <input
@@ -490,7 +444,6 @@ toast(`${filteredEmployees.length} employees selected`, {
               />
             </div>
 
-            {/* Clear Search Button */}
             {searchTerm && (
               <button
                 onClick={() => {
@@ -504,8 +457,6 @@ toast(`${filteredEmployees.length} employees selected`, {
             )}
           </div>
         </div>
-
-        {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <div className="bg-white rounded-2xl shadow-sm p-6 border-t-4 border-blue-500">
             <div className="text-3xl font-bold text-gray-900 mb-2">{stats.total}</div>
@@ -516,21 +467,11 @@ toast(`${filteredEmployees.length} employees selected`, {
             <div className="text-gray-600 font-medium">Filtered Results</div>
           </div>
         </div>
-
-        {/* Employees Table */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-900">
               {searchTerm ? `Search Results for "${searchTerm}"` : 'All Employees'}
             </h3>
-            <div className="flex gap-2">
-              <button 
-                onClick={handleExportCSV}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
-              >
-                Export CSV
-              </button>
-            </div>
           </div>
 
           <div className="overflow-x-auto">
@@ -652,7 +593,6 @@ toast(`${filteredEmployees.length} employees selected`, {
         </div>
       </div>
 
-      {/* Add/Edit Employee Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
